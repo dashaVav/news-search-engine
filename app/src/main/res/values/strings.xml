@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">News</string>
+    <string name="title_textview">titleTextView</string>
+    <string name="description_textview">descriptionTextView</string>
+    <string name="enter_search_query">Entersearchquery</string>
+    <string name="search">Search</string>
+</resources>
