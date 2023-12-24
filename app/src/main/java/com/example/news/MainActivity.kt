@@ -11,8 +11,6 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,7 +32,6 @@ class MainActivity : AppCompatActivity() {
         val editTextQuery: EditText = findViewById(R.id.editTextQuery)
 
         buttonSearch.setOnClickListener {
-            Log.d("CLICK", "CLICK")
             val query = editTextQuery.text.toString()
             if (query.isNotEmpty()) {
                 searchNews(query)
@@ -44,23 +41,14 @@ class MainActivity : AppCompatActivity() {
 
     @OptIn(DelicateCoroutinesApi::class)
     private fun searchNews(query: String) {
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.newsdata.io/v1/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        Log.d("RUN", "RUN")
         GlobalScope.launch(Dispatchers.Main) {
             try {
-                val response = ApiService.create().getNews(apiKey, query)
-                Log.d("NewsRepository", "API Response: " + response.results)
+                val response = NewsApiUtils.createRequest().getNews(apiKey, query)
                 if (response.status == "success") {
                     val articles = response.results
                     if (!articles.isNullOrEmpty()) {
                         newsAdapter.setData(articles)
-                    } else {
                     }
-                } else {
                 }
             } catch (e: Exception) {
                 Log.d("FAIL", e.toString())

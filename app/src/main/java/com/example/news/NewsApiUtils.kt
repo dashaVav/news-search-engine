@@ -4,11 +4,10 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object ApiService {
-
+object NewsApiUtils {
     private const val BASE_URL = "https://newsdata.io/api/1/"
 
-    fun create(): NewsApi {
+    fun createRequest(): NewsApi {
         val client = OkHttpClient.Builder()
             .addInterceptor { chain ->
                 val original = chain.request()
